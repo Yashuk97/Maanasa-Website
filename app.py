@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
-from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
@@ -16,6 +16,15 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+# This handles the redirection to the login page
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for('login'))
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Define database models before using them
 class Project(db.Model):
@@ -32,18 +41,26 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
-# Define custom admin views after the models they use
+# Custom Admin views to secure the dashboard
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login', next=request.url))
+
 class MyProjectView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login', next=request.url))
+    
     column_list = ('name', 'location', 'description')
     column_labels = dict(name='Project Name', location='Location', description='Description')
 
 # Initialize Flask-Admin after all the models and views are defined
-admin = Admin(app, name='Maanasa Admin', template_mode='bootstrap3')
+admin = Admin(app, name='Maanasa Admin', template_mode='bootstrap3', index_view=MyAdminIndexView())
 admin.add_view(MyProjectView(Project, db.session, name='Projects'))
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 @app.route("/")
 def home():
@@ -92,13 +109,18 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
-
         if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('admin.index'))
         else:
             flash("Invalid username or password", "danger")
     return render_template('login.html')
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.run(debug=True)
