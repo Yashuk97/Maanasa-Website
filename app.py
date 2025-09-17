@@ -1,6 +1,49 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
+
+# Configure database connection and security
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SECRET_KEY'] = 'a_very_secure_secret_key'
+
+# Initialize database, bcrypt, and login manager
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+# Define database models before using them
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Project('{self.name}', '{self.location}')"
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+
+# Define custom admin views after the models they use
+class MyProjectView(ModelView):
+    column_list = ('name', 'location', 'description')
+    column_labels = dict(name='Project Name', location='Location', description='Description')
+
+# Initialize Flask-Admin after all the models and views are defined
+admin = Admin(app, name='Maanasa Admin', template_mode='bootstrap3')
+admin.add_view(MyProjectView(Project, db.session, name='Projects'))
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route("/")
 def home():
@@ -12,12 +55,50 @@ def about():
 
 @app.route("/services")
 def services():
-    return render_template("services.html")
+    all_projects = Project.query.all()
+    return render_template("services.html", projects=all_projects)
 
-@app.route("/contact")
+@app.route("/contact", methods=['GET', 'POST'])
 def contact():
-    return render_template("contact.html")
+    if request.method == 'POST':
+        # Get data from the form
+        name = request.form.get('name')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
+        project_id = request.form.get('project_id')
+        message = request.form.get('message')
 
+        # Print the data to your terminal
+        print("\n--- New Form Submission ---")
+        print(f"Name: {name}")
+        print(f"Email: {email}")
+        print(f"Phone: {phone}")
+        print(f"Project ID: {project_id}")
+        print(f"Message: {message}")
+        print("-----------------------------\n")
+
+        # We can pretend the message was sent
+        flash("Your message has been sent successfully!", "success")
+        return redirect(url_for('contact'))
+
+    all_projects = Project.query.all()
+    return render_template("contact.html", projects=all_projects)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('admin.index'))
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = User.query.filter_by(username=username).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('admin.index'))
+        else:
+            flash("Invalid username or password", "danger")
+    return render_template('login.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
