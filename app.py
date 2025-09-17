@@ -4,6 +4,7 @@ from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask_bcrypt import Bcrypt
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
@@ -16,6 +17,13 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'maanasa.inquiries@gmail.com'  # REPLACE WITH YOUR EMAIL
+app.config['MAIL_PASSWORD'] = 'ksid epsv ezfs fznm'     # REPLACE WITH YOUR APP PASSWORD
+mail = Mail(app)
 
 # This handles the redirection to the login page
 @login_manager.unauthorized_handler
@@ -85,17 +93,22 @@ def contact():
         project_id = request.form.get('project_id')
         message = request.form.get('message')
 
-        # Print the data to your terminal
-        print("\n--- New Form Submission ---")
-        print(f"Name: {name}")
-        print(f"Email: {email}")
-        print(f"Phone: {phone}")
-        print(f"Project ID: {project_id}")
-        print(f"Message: {message}")
-        print("-----------------------------\n")
+        msg = Message(
+            subject=f"New Inquiry from Website: {name}",
+            sender=app.config['MAIL_USERNAME'],
+            recipients=[app.config['MAIL_USERNAME']],
+            body=f"Name: {name}\nEmail: {email}\nPhone: {phone}\nProject ID: {project_id}\n\nMessage:\n{message}"
+        )
 
-        # We can pretend the message was sent
-        flash("Your message has been sent successfully!", "success")
+        # Send the email and handle any errors
+        try:
+            mail.send(msg)
+            flash("Your message has been sent successfully!", "success")
+        except Exception as e:
+            flash(f"There was an issue sending your message. Error: {e}", "danger")
+            
+        
+        # Redirect the user back to the contact page
         return redirect(url_for('contact'))
 
     all_projects = Project.query.all()
