@@ -102,9 +102,18 @@ button[type="submit"]:hover {
 
 /* Project Item Styling */
 .project-item {
+    display: flex;
+    gap: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     margin-bottom: 2rem;
+    align-items: center;
+}
+.project-image{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
 }

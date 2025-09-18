@@ -5,6 +5,11 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
+from flask_admin.form import form
+from wtforms import fields
+from flask_admin.form import ImageUploadField
+import os
+
 
 app = Flask(__name__)
 
@@ -12,22 +17,20 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SECRET_KEY'] = 'a_very_secure_secret_key'
 
+UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static/uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 Megabytes max upload size
+
 # Initialize database, bcrypt, and login manager
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'maanasa.inquiries@gmail.com'  # REPLACE WITH YOUR EMAIL
-app.config['MAIL_PASSWORD'] = 'ksid epsv ezfs fznm'     # REPLACE WITH YOUR APP PASSWORD
-mail = Mail(app)
-
 # This handles the redirection to the login page
 @login_manager.unauthorized_handler
 def unauthorized():
+    flash("Please log in to get access to this page", "warning")
     return redirect(url_for('login'))
 
 @login_manager.user_loader
@@ -40,6 +43,8 @@ class Project(db.Model):
     name = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
+    photo_url = db.Column(db.String(255), nullable=True) # Add this line
+
 
     def __repr__(self):
         return f"Project('{self.name}', '{self.location}')"
@@ -53,18 +58,41 @@ class User(db.Model, UserMixin):
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
         return current_user.is_authenticated
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('login', next=request.url))
 
 class MyProjectView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated
 
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('login', next=request.url))
-    
-    column_list = ('name', 'location', 'description')
-    column_labels = dict(name='Project Name', location='Location', description='Description')
+    form_overrides = {
+        'photo_url': ImageUploadField
+    }
+
+    form_args = {
+        'photo_url': {
+            'label': 'Project Image',
+            'base_path': app.config['UPLOAD_FOLDER'],   # absolute path
+            'relative_path': 'uploads/',                # subfolder in /static
+            'allow_overwrite': False
+        }
+    }
+
+    column_list = ('name', 'location', 'description', 'photo_url')
+    column_labels = dict(
+        name='Project Name',
+        location='Location',
+        description='Description',
+        photo_url='Project Image'
+    )
+
+    def _list_thumbnail(view, context, model, name):
+        if not model.photo_url:
+            return ''
+        return f'<img src="{url_for("static", filename="uploads/" + model.photo_url)}" width="100px">'
+
+    column_formatters = {
+        'photo_url': _list_thumbnail
+    }
+
 
 # Initialize Flask-Admin after all the models and views are defined
 admin = Admin(app, name='Maanasa Admin', template_mode='bootstrap3', index_view=MyAdminIndexView())
@@ -107,8 +135,6 @@ def contact():
         except Exception as e:
             flash(f"There was an issue sending your message. Error: {e}", "danger")
             
-        
-        # Redirect the user back to the contact page
         return redirect(url_for('contact'))
 
     all_projects = Project.query.all()
