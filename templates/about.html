@@ -3,6 +3,12 @@
 {% block title %} About Us {% endblock %}
 
 {% block content %}
+<div class="about-us-container">
     <h1>About Our Company</h1>
-    <p>Built with trust and love</p>
+    {% if about_content %}
+        <p>{{ about_content.content }}</p>
+    {% else %}
+        <p>Content for this page has not been added yet. Please update it from the admin dashboard</p>
+    {% endif %}
+</div>
 {% endblock %}

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Maanasa Constructions{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+    <script src="https://kit.fontawesome.com/9741edfba4.js" crossorigin="anonymous"></script></head>
 <body>
     <header class="main-header">
         <div class="logo">
@@ -36,6 +36,97 @@
         {% endblock %}
     </main>
     <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Maanasa Constructions Logo" class="footer-logo">
+                <p class="company-quote">Building with trust, designed with love</p>
+            </div>
+            <div class="footer-right">
+    <p>Follow Us & Get in Touch</p>
+    <div class="socials-container">
+        <a href="mailto:maanasa.inquiries@gmail.com" target="_blank">
+            <i class="fa-solid fa-envelope"></i>
+        </a>
+        <a href="https://twitter.com/your-twitter-handle" target="_blank">
+            <i class="fa-brands fa-twitter"></i>
+        </a>
+        <a href="https://instagram.com/your-instagram-handle" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+</div>
+        </div>
     </footer>
+    <div class="chatbot-wrapper">
+    <button id="chat-icon-button">
+        <img src="{{ url_for('static', filename='images/chatbotlogo.png') }}" alt="Chatbot Icon" class="chatbot-icon">
+    </button>
+
+    <div class="chatbot-container" style="display: none;">
+        <div class="chatbot-header">Maanasa Bot
+            <button id="close-chatbot-button">x</button>
+        </div>
+        <div class="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type a message...">
+        </div>
+    </div>
+</div>
+    <script>
+    // Get references to all the HTML elements
+    const chatIconButton = document.getElementById('chat-icon-button');
+    const chatWindow = document.querySelector('.chatbot-container');
+    const chatbox = document.querySelector('.chatbot-messages');
+    const input = document.querySelector('.chatbot-input input');
+    const closeChatbotButton = document.getElementById('close-chatbot-button');
+
+
+
+    // 1. Logic for showing/hiding the chatbot
+    chatIconButton.addEventListener('click', function() {
+        chatWindow.style.display = 'flex';
+        chatIconButton.style.display = 'none';
+    });
+    //3. logic for closing the chatbot window
+    closeChatbotButton.addEventListener('click', function() {
+    chatWindow.style.display = 'none';
+    chatIconButton.style.display = 'flex';
+    });
+
+    // 2. Logic for sending and receiving messages
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const userMessage = input.value.trim();
+            if (userMessage) {
+                // Display user message
+                const userMsgDiv = document.createElement('div');
+                userMsgDiv.className = 'message user';
+                userMsgDiv.textContent = userMessage;
+                chatbox.appendChild(userMsgDiv);
+
+                // Send message to backend
+                fetch('/chatbot-api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const botMessage = data.response;
+                    const botMsgDiv = document.createElement('div');
+                    botMsgDiv.className = 'message bot';
+                    botMsgDiv.textContent = botMessage;
+                    chatbox.appendChild(botMsgDiv);
+                });
+
+                // Clear input
+                input.value = '';
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+        }
+    });
+</script>
 </body>
 </html>

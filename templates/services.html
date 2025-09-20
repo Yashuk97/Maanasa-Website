@@ -3,17 +3,18 @@
 {% block title %}Services{% endblock %}
 
 {% block content %}
+<div class="projects-landing">
     <h1>Our Projects</h1>
-    {% for project in projects %}
-        <div class="project-item">
-            {% if project.photo_url %}
-                <img src="{{ url_for('static', filename='uploads/' + project.photo_url) }}" alt="{{ project.name }}" class="project-image">
-            {% endif %}
-            <div class="project-details">
-            <h2>{{ project.name }}</h2>
-            <p><strong>Location:</strong> {{ project.location }}</p>
-            <p>{{ project.description }}</p>
-            </div>
-        </div>
-    {% endfor %}
+    <p>Explore our Ongoing and Past Projects below.</p>
+    <div class="projects-container">
+        <a href="{{ url_for('projects_list', status_filter='Ongoing') }}" class="project-category ongoing-projects-card">
+            <h2>Ongoing Projects</h2>
+            <p>See our projects currently under construction.</p>
+        </a>
+        <a href="{{ url_for('projects_list', status_filter='Past') }}" class="project-category past-projects-card">
+            <h2>Past Projects</h2>
+            <p>Browse our gallery of completed work</p>
+        </a>
+    </div>
+</div>
 {% endblock %}
