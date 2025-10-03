@@ -337,3 +337,188 @@ footer{
     font-size: 1.2rem;
     margin-top: 5px;
 }
+/* About Us Page Specific Styling */
+
+/* Hero Section */
+.about-us-hero {
+    background-image: url("{{ url_for('static', filename='images/about-hero-bg.jpg') }}"); /* Add a relevant image here */
+    background-size: cover;
+    background-position: center;
+    height: 50vh; /* Shorter than homepage hero */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden; /* For future effects */
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+    padding: 2rem 4rem;
+    border-radius: 10px;
+}
+
+.about-us-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+.about-us-hero p {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+/* General Section Styling */
+.about-section, .mission-vision-values, .leadership-section, .quality-commitment {
+    padding: 5rem 2rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.about-section h2, .mission-vision-values h3, .leadership-section h2, .quality-commitment h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.about-section p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Mission, Vision, Values */
+.mission-vision-values {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 2rem;
+    background-color: #f9f9f9;
+    border-bottom: none; /* No border for this one */
+}
+
+.m-v-item {
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+.m-v-item h3 {
+    color: #921414; /* Your brand color */
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.m-v-item p, .m-v-item ul {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.m-v-item ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.m-v-item li {
+    margin-bottom: 10px;
+}
+
+/* Leadership Section */
+.leadership-section {
+    background-color: #ffffff;
+}
+
+.leader-card {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.leader-card h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.leader-card .leader-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #921414; /* Your brand color */
+    margin-bottom: 1.5rem;
+}
+
+.leader-card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #666;
+}
+
+/* Quality Commitment Section */
+.quality-commitment {
+    background-color: #f9f9f9;
+    border-bottom: none;
+}
+
+.quality-commitment h2 {
+    color: #921414; /* Your brand color */
+}
+
+.quality-commitment p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: #444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .about-us-hero h1 {
+        font-size: 2.5rem;
+    }
+    .about-us-hero p {
+        font-size: 1rem;
+    }
+    .about-section h2, .mission-vision-values h3, .leadership-section h2, .quality-commitment h2 {
+        font-size: 2rem;
+    }
+    .m-v-item {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+/* Leadership Section (No Image Layout) */
+.leader-card {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3rem;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center; /* Ensures all text is centered */
+}
+
+.leader-card .leader-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #921414;
+    margin-bottom: 1.5rem;
+}
+/* No other changes needed! */

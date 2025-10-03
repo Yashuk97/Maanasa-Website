@@ -1,14 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %} About Us {% endblock %}
+{% block title %}About Us - Maanasa Constructions{% endblock %}
 
 {% block content %}
-<div class="about-us-container">
-    <h1>About Our Company</h1>
-    {% if about_content %}
-        <p>{{ about_content.content }}</p>
-    {% else %}
-        <p>Content for this page has not been added yet. Please update it from the admin dashboard</p>
-    {% endif %}
+<div class="about-us-hero" data-aos="fade-in" data-aos-duration="1500">
+    <div class="hero-overlay">
+        <h1>Building Legacies, One Project at a Time.</h1>
+        <p>Our commitment to excellence shapes every foundation we lay.</p>
+    </div>
 </div>
+
+<section class="about-section container" data-aos="fade-up" data-aos-delay="200">
+    <h2>Our Story: Crafting Visions into Reality</h2>
+    <p>At Maanasa Constructions, our journey began with a simple yet profound vision: to redefine the standards of construction through unwavering quality, innovative solutions, and absolute client satisfaction. Founded by Kalavakuri Nagendra Rao, we set out to build not just structures, but lasting relationships and communities. From humble beginnings, we have grown into a trusted name, known for our integrity and the precision with which we bring every blueprint to life.</p>
+</section>
+
+<section class="mission-vision-values container">
+    <div class="m-v-item" data-aos="fade-right" data-aos-delay="400">
+        <h3>Our Mission</h3>
+        <p>To deliver exceptional construction services that consistently exceed client expectations, ensuring every project is completed with unparalleled quality, safety, and efficiency.</p>
+    </div>
+    <div class="m-v-item" data-aos="fade-up" data-aos-delay="600">
+        <h3>Our Vision</h3>
+        <p>To be the leading construction partner, recognized for our innovative approach, sustainable practices, and profound impact on the landscapes and lives we touch.</p>
+    </div>
+    <div class="m-v-item" data-aos="fade-left" data-aos-delay="800">
+        <h3>Our Values</h3>
+        <ul>
+            <li data-aos="fade-left" data-aos-delay="900"><strong>Integrity:</strong> Upholding the highest ethical standards in all our endeavors.</li>
+            <li data-aos="fade-left" data-aos-delay="1000"><strong>Quality:</strong> Committing to superior craftsmanship and durable solutions.</li>
+            <li data-aos="fade-left" data-aos-delay="1100"><strong>Collaboration:</strong> Fostering strong partnerships with clients, employees, and communities.</li>
+            <li data-aos="fade-left" data-aos-delay="1200"><strong>Innovation:</strong> Embracing new technologies and methods for better outcomes.</li>
+            <li data-aos="fade-left" data-aos-delay="1300"><strong>Sustainability:</strong> Building responsibly for a better future.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="leadership-section container" data-aos="fade-up" data-aos-delay="1400">
+    <h2>Meet Our Leadership</h2>
+    <div class="leader-card">
+        <h3>Kalavakuri Nagendra Rao</h3>
+        <p class="leader-title">Managing Partner</p>
+        <p>With a decade of hands-on experience and a relentless drive for perfection, Nagendra Rao founded Maanasa Constructions on the principles of trust and craftsmanship. He personally oversees strategic direction, ensuring that our commitment to quality permeates every aspect of our operations and client relationships.</p>
+    </div>
+</section>
+
+<section class="quality-commitment container" data-aos="fade-in" data-aos-delay="1600">
+    <h2>Our Commitment to Quality</h2>
+    <p>At Maanasa Constructions, quality is not just a goal—it's the foundation of everything we do. We meticulously plan, execute, and monitor every phase of construction, adhering to the highest industry standards. From the selection of premium materials to the expertise of our skilled workforce, we ensure that every detail contributes to a structure that is safe, sustainable, and built to stand the test of time. Our rigorous quality control processes guarantee exceptional results and deliver peace of mind to our clients.</p>
+</section>
+
 {% endblock %}

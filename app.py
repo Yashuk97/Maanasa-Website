@@ -14,21 +14,24 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Configure database connection and security
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SECRET_KEY'] = 'a_very_secure_secret_key'
 
 UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static/uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 Megabytes max upload size
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  
 
-# Initialize database, bcrypt, and login manager
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'maanasa.inquiries@gmail.com'  # <-- REPLACE THIS LINE
+app.config['MAIL_PASSWORD'] = 'otgn inxt uihy gfum'     # <-- REPLACE THIS LINE
+mail = Mail(app)
 login_manager.login_view = 'login'
 
-# This handles the redirection to the login page
 @login_manager.unauthorized_handler
 def unauthorized():
     flash("Please log in to get access to this page", "warning")
@@ -38,7 +41,6 @@ def unauthorized():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Define database models before using them
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -102,7 +104,6 @@ class MyProjectView(ModelView):
         'photo_url': _list_thumbnail
     }
 
-# Initialize Flask-Admin after all the models and views are defined
 admin = Admin(app, name='Maanasa Admin', template_mode='bootstrap3', index_view=MyAdminIndexView())
 admin.add_view(MyProjectView(Project, db.session, name='Projects'))
 admin.add_view(ModelView(About, db.session, name='About Us'))
@@ -151,8 +152,11 @@ def contact():
             mail.send(msg)
             flash("Your message has been sent successfully!", "success")
         except Exception as e:
-            flash(f"There was an issue sending your message. Error: {e}", "danger")
+            print(f"EMAIL SENDING FAILED: {e}") 
+            flash(f"There was an issue sending your message. Please try again later.", "danger")
+            
         return redirect(url_for('contact'))
+    
     all_projects = Project.query.all()
     return render_template("contact.html", projects=all_projects)
 
