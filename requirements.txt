@@ -1,9 +1,8 @@
 Flask
 gunicorn
 Flask-SQLAlchemy
-Flask-Admin
+Flask-Admin==1.6.1
 Flask-Login
 Flask-Bcrypt
 Flask-Mail
 Pillow
-bcrypt

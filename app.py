@@ -104,7 +104,7 @@ class MyProjectView(ModelView):
         'photo_url': _list_thumbnail
     }
 
-admin = Admin(app, name='Maanasa Admin', template_mode='bootstrap3', index_view=MyAdminIndexView())
+admin = Admin(app, name='Maanasa Admin', index_view=MyAdminIndexView())
 admin.add_view(MyProjectView(Project, db.session, name='Projects'))
 admin.add_view(ModelView(About, db.session, name='About Us'))
 
