@@ -1,3 +1,8 @@
 Flask
 gunicorn
 Flask-SQLAlchemy
+Flask-Admin
+Flask-Login
+Flask-Bcrypt
+Flask-Mail
+Pillow
