@@ -6,3 +6,4 @@ Flask-Login
 Flask-Bcrypt
 Flask-Mail
 Pillow
+bcrypt
