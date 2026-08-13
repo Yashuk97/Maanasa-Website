@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - Maanasa Constructions{% endblock %}
+
+{% block content %}
+<div class="faq-page container">
+    <p class="projects-eyebrow" data-aos="fade-up">Got Questions?</p>
+    <h1 class="faq-heading" data-aos="fade-up">Frequently Asked <span class="contact-heading-accent">Questions</span>
+    </h1>
+    <p class="faq-subtext" data-aos="fade-up">Answers to what clients ask us most. Can't find what you're looking
+        for? Reach out and we'll get back to you.</p>
+
+    <div class="faq-accordion">
+        {% set faqs = [
+        ("What areas do you serve?",
+        "We're based in Malkajgiri, Hyderabad, and build across Malkajgiri, Anandbagh, Moulali, Habsiguda, Bowenpally, Alwal, Ramanthapur, and Safilguda."),
+        ("How do I get a quote for my project?",
+        "Fill out the form on our Contact page, message us on WhatsApp, or chat with our bot on the homepage — whichever is easiest for you. We'll follow up to discuss your project and next steps."),
+        ("What materials and brands do you build with?",
+        "We build with trusted, quality materials — Radha TMT steel, UltraTech and Ramco cement, Indian Teakwood, Asian Paints, and CERA & Jaguar bathroom fittings."),
+        ("What's the difference between \"In Progress\" and \"Completed\" projects on your Services page?",
+        "\"In Progress\" projects are currently under construction — you can see their flats, floors, duration, and completion percentage on each project's detail page. \"Completed\" projects have already been delivered to clients."),
+        ("How long does a typical project take?",
+        "It depends on the scope and size of the build. You can see the estimated duration and current progress for any ongoing project on its own detail page under Services."),
+        ("Can I customize the floor plan?",
+        "Yes — reach out to us early in the process and we'll work with you on layout and customization where it's structurally possible."),
+        ("Do you handle both residential and commercial projects?",
+        "Yes, we build custom homes, residential complexes, and commercial spaces."),
+        ("How can I reach you directly?",
+        "Call us at +91 89787 46226 or +91 83742 46226 (also on WhatsApp), email maanasa.enquiries@gmail.com, or visit our office at 20-146, Maanasa Gold, Dayanand Nagar, Malkajgiri, Hyderabad - 500047."),
+        ] %}
+        {% for question, answer in faqs %}
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 50 }}">
+            <button type="button" class="faq-question">
+                <span>{{ question }}</span>
+                <i class="fa-solid fa-plus faq-icon" aria-hidden="true"></i>
+            </button>
+            <div class="faq-answer">
+                <p>{{ answer }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="faq-cta" data-aos="zoom-in">
+        <h2>Still have questions?</h2>
+        <a href="https://wa.me/918374246226" target="_blank" rel="noopener" class="whatsapp-direct-btn">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Chat on WhatsApp
+        </a>
+        <a href="{{ url_for('contact') }}" class="hero-cta">Contact Us</a>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const item = btn.closest('.faq-item');
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+
+            document.querySelectorAll('.faq-item.open').forEach(function (openItem) {
+                if (openItem !== item) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-answer').style.maxHeight = null;
+                }
+            });
+
+            if (isOpen) {
+                item.classList.remove('open');
+                answer.style.maxHeight = null;
+            } else {
+                item.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+</script>
+{% endblock %}

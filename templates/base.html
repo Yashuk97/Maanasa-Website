@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700;800;900&display=swap"
+        rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Maanasa Constructions{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="https://kit.fontawesome.com/9741edfba4.js" crossorigin="anonymous"></script></head>
-<body>
+    <script src="https://kit.fontawesome.com/9741edfba4.js" crossorigin="anonymous"></script>
+    <meta name="description"
+        content="Maanasa Constructions — residential & commercial builders in Malkajgiri, Hyderabad, serving Anandbagh, Moulali, Habsiguda, Bowenpally, Alwal, Ramanthapur, and Safilguda.">
+    <meta property="og:title" content="Maanasa Constructions">
+    <meta property="og:description"
+        content="Family-owned residential & commercial construction in Malkajgiri, Hyderabad.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/logo.png', _external=True) }}">
+    <meta property="og:type" content="website">
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
     <header class="main-header">
         <div class="logo">
             <a href="/">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Maanasa Constructions Logo">
             </a>
         </div>
-        <nav class="main-nav">
-            <a href="/">Home</a> |
-            <a href="/about">About Us</a> |
-            <a href="/services">Services</a> |
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <nav class="main-nav" id="main-nav">
+            <a href="/">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/services">Services</a>
+            <a href="/faq">FAQ</a>
             <a href="/contact">Contact</a>
         </nav>
     </header>
@@ -40,105 +60,273 @@
     <footer>
         <div class="footer-content">
             <div class="footer-left">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Maanasa Constructions Logo" class="footer-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Maanasa Constructions Logo"
+                    class="footer-logo">
                 <p class="company-quote">Building with trust, designed with love</p>
             </div>
+            <div class="footer-center">
+                <p class="footer-heading">Visit Us</p>
+                <a class="footer-address"
+                    href="https://www.google.com/maps/search/?api=1&query=20-146%2C+Maanasa+Gold%2C+Dayanand+Nagar%2C+Malkajgiri%2C+Hyderabad+-+500047"
+                    target="_blank" rel="noopener">
+                    20-146, Maanasa Gold, Dayanand Nagar,<br>Malkajgiri, Hyderabad - 500047
+                </a>
+                <iframe class="footer-map"
+                    src="https://www.google.com/maps?q=20-146,+Maanasa+Gold,+Dayanand+Nagar,+Malkajgiri,+Hyderabad+-+500047&output=embed"
+                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    title="Maanasa Constructions office location"></iframe>
+                <p class="footer-areas-served">Serving Malkajgiri, Anandbagh, Moulali, Habsiguda, Bowenpally, Alwal,
+                    Ramanthapur &amp; Safilguda</p>
+            </div>
             <div class="footer-right">
-    <p>Follow Us & Get in Touch</p>
-    <div class="socials-container">
-        <a href="mailto:maanasa.inquiries@gmail.com" target="_blank">
-            <i class="fa-solid fa-envelope"></i>
-        </a>
-        <a href="https://twitter.com/your-twitter-handle" target="_blank">
-            <i class="fa-brands fa-twitter"></i>
-        </a>
-        <a href="https://instagram.com/your-instagram-handle" target="_blank">
-            <i class="fa-brands fa-instagram"></i>
-        </a>
-    </div>
-</div>
+                <p class="footer-heading">Follow Us & Get in Touch</p>
+                <p class="footer-phones">
+                    <a href="tel:+918978746226">+91 89787 46226</a> &nbsp;|&nbsp; <a href="tel:+918374246226">+91 83742
+                        46226</a>
+                </p>
+                <p class="footer-contact-links">
+                    <a href="mailto:maanasa.enquiries@gmail.com">Email us</a> &nbsp;|&nbsp;
+                    <a href="https://wa.me/918374246226" target="_blank" rel="noopener">Chat on WhatsApp</a>
+                    &nbsp;|&nbsp;
+                    <a href="{{ url_for('faq') }}">FAQ</a>
+                </p>
+                <div class="socials-container">
+                    <a href="mailto:maanasa.enquiries@gmail.com" target="_blank" aria-label="Email us">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/918374246226" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/1J1PFDxcop/?mibextid=wwXIfr" target="_blank" rel="noopener"
+                        aria-label="Facebook">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://x.com/maanasaconst?s=11" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/maanasa_constructions/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
         </div>
+        <p class="footer-copyright">&copy; {{ current_year }} Maanasa Constructions. All rights reserved.</p>
     </footer>
     <div class="chatbot-wrapper">
-    <button id="chat-icon-button">
-        <img src="{{ url_for('static', filename='images/chatbotlogo.png') }}" alt="Chatbot Icon" class="chatbot-icon">
-    </button>
+        <button id="chat-icon-button">
+            <img src="{{ url_for('static', filename='images/chatbotlogo.png') }}" alt="Chatbot Icon"
+                class="chatbot-icon">
+        </button>
 
-    <div class="chatbot-container" style="display: none;">
-        <div class="chatbot-header">Maanasa Bot
-            <button id="close-chatbot-button">x</button>
-        </div>
-        <div class="chatbot-messages"></div>
-        <div class="chatbot-input">
-            <input type="text" placeholder="Type a message...">
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <img src="{{ url_for('static', filename='images/chatbotlogo.png') }}" alt=""
+                    class="chatbot-header-avatar">
+                <div class="chatbot-header-text">
+                    <span class="chatbot-header-title">Maanasa Bot</span>
+                    <span class="chatbot-header-status"><span class="chatbot-status-dot"></span>Online</span>
+                </div>
+                <button id="close-chatbot-button" aria-label="Close chat">&times;</button>
+            </div>
+            <div class="chatbot-messages"></div>
+            <div class="chatbot-input">
+                <input type="text" placeholder="Type a message...">
+                <button id="chat-send-button" type="button" aria-label="Send message">
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </div>
-</div>
     <script>
-    // Get references to all the HTML elements
-    const chatIconButton = document.getElementById('chat-icon-button');
-    const chatWindow = document.querySelector('.chatbot-container');
-    const chatbox = document.querySelector('.chatbot-messages');
-    const input = document.querySelector('.chatbot-input input');
-    const closeChatbotButton = document.getElementById('close-chatbot-button');
+        // Get references to all the HTML elements
+        const chatIconButton = document.getElementById('chat-icon-button');
+        const chatWindow = document.querySelector('.chatbot-container');
+        const chatbox = document.querySelector('.chatbot-messages');
+        const input = document.querySelector('.chatbot-input input');
+        const closeChatbotButton = document.getElementById('close-chatbot-button');
 
+        const chatbotState = { step: 'menu', leadName: '' };
+        let chatInitialized = false;
 
+        function addBotMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'message bot';
+            div.textContent = text;
+            chatbox.appendChild(div);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
 
-    // 1. Logic for showing/hiding the chatbot
-    chatIconButton.addEventListener('click', function() {
-        chatWindow.style.display = 'flex';
-        chatIconButton.style.display = 'none';
-    });
-    //3. logic for closing the chatbot window
-    closeChatbotButton.addEventListener('click', function() {
-    chatWindow.style.display = 'none';
-    chatIconButton.style.display = 'flex';
-    });
+        function addUserMessage(text) {
+            const div = document.createElement('div');
+            div.className = 'message user';
+            div.textContent = text;
+            chatbox.appendChild(div);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
 
-    // 2. Logic for sending and receiving messages
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            const userMessage = input.value.trim();
-            if (userMessage) {
-                // Display user message
-                const userMsgDiv = document.createElement('div');
-                userMsgDiv.className = 'message user';
-                userMsgDiv.textContent = userMessage;
-                chatbox.appendChild(userMsgDiv);
+        function showTyping() {
+            const div = document.createElement('div');
+            div.className = 'message bot typing';
+            div.id = 'chat-typing-indicator';
+            div.innerHTML = '<span></span><span></span><span></span>';
+            chatbox.appendChild(div);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
 
-                // Send message to backend
-                fetch('/chatbot-api', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message: userMessage }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const botMessage = data.response;
-                    const botMsgDiv = document.createElement('div');
-                    botMsgDiv.className = 'message bot';
-                    botMsgDiv.textContent = botMessage;
-                    chatbox.appendChild(botMsgDiv);
+        function hideTyping() {
+            const el = document.getElementById('chat-typing-indicator');
+            if (el) el.remove();
+        }
+
+        // Shows a brief "typing..." beat before the bot's reply appears, so it
+        // reads like a live conversation instead of an instant text dump.
+        function botReply(text, callback) {
+            showTyping();
+            setTimeout(function () {
+                hideTyping();
+                addBotMessage(text);
+                if (callback) callback();
+            }, 500 + Math.random() * 400);
+        }
+
+        function showMenu() {
+            chatbotState.step = 'menu';
+            const wrap = document.createElement('div');
+            wrap.className = 'chatbot-quick-replies';
+            const options = ['Our Services', 'Current Projects', 'Get a Quote', 'Contact Us', 'Areas We Serve'];
+            options.forEach(function (label) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'chatbot-option-btn';
+                btn.textContent = label;
+                btn.addEventListener('click', function () {
+                    handleMenuChoice(label);
                 });
+                wrap.appendChild(btn);
+            });
+            chatbox.appendChild(wrap);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
 
-                // Clear input
-                input.value = '';
-                chatbox.scrollTop = chatbox.scrollHeight;
+        function handleMenuChoice(label) {
+            addUserMessage(label);
+            if (label === 'Our Services') {
+                botReply('We build apartments, residential complexes, independent houses, and flat developments. See the full list on our Services page.', showMenu);
+            } else if (label === 'Current Projects') {
+                botReply('You can see everything we\'re currently building on our Current Projects page.', showMenu);
+            } else if (label === 'Contact Us') {
+                botReply('Call us at +91 89787 46226 or +91 83742 46226, or email maanasa.enquiries@gmail.com. You can also use our Contact page.', showMenu);
+            } else if (label === 'Areas We Serve') {
+                botReply('We serve Malkajgiri, Anandbagh, Moulali, Habsiguda, Bowenpally, Alwal, Ramanthapur, and Safilguda.', showMenu);
+            } else if (label === 'Get a Quote') {
+                chatbotState.step = 'awaiting_name';
+                botReply("Great! Let's get you a quote. What's your name?");
             }
         }
-    });
-</script>
-<script>
-    AOS.init({
-        offset: 120, 
-        delay: 0, 
-        duration: 1000, 
-        easing: 'ease-in-out', 
-        once: true, 
-        mirror: false, 
-    });
-</script>
+
+        function openChat() {
+            chatWindow.classList.add('open');
+            chatIconButton.style.display = 'none';
+            if (!chatInitialized) {
+                chatInitialized = true;
+                botReply('Hello! Welcome to Maanasa Constructions. How can I help you today?', showMenu);
+            }
+        }
+
+        // 1. Logic for showing/hiding the chatbot
+        chatIconButton.addEventListener('click', openChat);
+        //3. logic for closing the chatbot window
+        closeChatbotButton.addEventListener('click', function () {
+            chatWindow.classList.remove('open');
+            chatIconButton.style.display = 'flex';
+        });
+
+        // 2. Logic for sending and receiving messages (lead capture + freeform fallback)
+        function sendMessage() {
+            const userMessage = input.value.trim();
+            if (!userMessage) return;
+
+            if (chatbotState.step === 'awaiting_name') {
+                addUserMessage(userMessage);
+                input.value = '';
+                chatbotState.leadName = userMessage;
+                chatbotState.step = 'awaiting_phone';
+                botReply('Thanks, ' + userMessage + '! What\'s the best phone number to reach you on?');
+                return;
+            }
+
+            if (chatbotState.step === 'awaiting_phone') {
+                addUserMessage(userMessage);
+                input.value = '';
+                const name = chatbotState.leadName;
+                const phone = userMessage;
+                showTyping();
+                fetch('/chatbot-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name, phone: phone }),
+                })
+                    .then(function (response) { return response.json(); })
+                    .then(function (data) {
+                        hideTyping();
+                        if (data.success) {
+                            addBotMessage('Thanks ' + name + '! We\'ve got your details and our team will call you at ' + phone + ' shortly. You can also reach us directly at +91 89787 46226 / +91 83742 46226.');
+                        } else {
+                            addBotMessage('Sorry, something went wrong sending your details. Please call us directly at +91 89787 46226 or email maanasa.enquiries@gmail.com.');
+                        }
+                        showMenu();
+                    })
+                    .catch(function () {
+                        hideTyping();
+                        addBotMessage('Sorry, something went wrong sending your details. Please call us directly at +91 89787 46226 or email maanasa.enquiries@gmail.com.');
+                        showMenu();
+                    });
+                return;
+            }
+
+            // Default: freeform message, fall back to keyword-based /chatbot-api
+            addUserMessage(userMessage);
+            input.value = '';
+            showTyping();
+            fetch('/chatbot-api', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage }),
+            })
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    hideTyping();
+                    addBotMessage(data.response);
+                });
+        }
+
+        input.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+        document.getElementById('chat-send-button').addEventListener('click', sendMessage);
+
+        const navToggle = document.getElementById('nav-toggle');
+        const mainNav = document.getElementById('main-nav');
+        navToggle.addEventListener('click', function () {
+            mainNav.classList.toggle('open');
+        });
+
+        // Auto-open the chatbot on the homepage only, shortly after the page loads.
+        if (document.body.classList.contains('page-home')) {
+            setTimeout(openChat, 1500);
+        }
+    </script>
+    <script>
+        AOS.init({
+            offset: 120,
+            delay: 0,
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false,
+        });
+    </script>
 </body>
+
 </html>

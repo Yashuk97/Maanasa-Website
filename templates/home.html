@@ -1,19 +1,28 @@
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
+{% block body_class %}page-home{% endblock %}
 
 {% block content %}
 <section class="hero">
-    <div class="hero-content">
-        <h1>Maanasa Constructions</h1>
-        <p>"Crafting Spaces, Building Relationships"</p>
+    <div class="hero-inner">
+        <p class="hero-location">Malkajgiri / Secunderabad / 500047</p>
+        <h1 class="hero-heading">Maanasa<br><span class="hero-accent">Constructions</span></h1>
+        <p class="hero-subtext">Crafting Spaces, Building Relationships</p>
+        <a href="{{ url_for('contact') }}" class="hero-cta">Discuss Your Project <span
+                aria-hidden="true">&#8599;</span></a>
     </div>
+    <a href="#mission" class="hero-scroll-cue"><span aria-hidden="true">&#8595;</span> Scroll to see our work</a>
 </section>
 
-<section class="company-intro">
+<section class="company-intro" id="mission">
     <div class="container">
         <h2>Our Mission</h2>
-        <p>At Maanasa Constructions, we don't just build structures; we build futures. Our mission is to transform visions into tangible realities, creating spaces that are both beautiful and built to last. We are dedicated to delivering exceptional results through meticulous attention to detail, transparent communication, and an unwavering commitment to quality. From residential complexes to custom-built homes, we bring a foundation of trust to every project.</p>
+        <p>At Maanasa Constructions, we don't just build structures; we build futures. Our mission is to transform
+            visions into tangible realities, creating spaces that are both beautiful and built to last. We are dedicated
+            to delivering exceptional results through meticulous attention to detail, transparent communication, and an
+            unwavering commitment to quality. From residential complexes to custom-built homes, we bring a foundation of
+            trust to every project.</p>
     </div>
 </section>
 
@@ -21,9 +30,13 @@
     <div class="container">
         <div class="profile-card">
             <div class="profile-details">
-                <h3>Kalavakuri Nagendra Rao</h3>
-                <p class="ceo-position">Managing Partner</p>
-                <p class="ceo-description">As the Managing Partner of Maanasa Constructions, Nagendra Rao Kalavakuri leads with a commitment to excellence and a passion for craftsmanship. With over a decade of industry experience, he ensures that every project reflects our core values of quality, integrity, and client satisfaction.</p>
+                <h3>Kalavakuri Nagendra Rao<br><span class="co-partner-name">&amp;<br>Kalavakuri Dhana
+                            Lakshmi</span></h3>
+                <p class="ceo-position"> Founder & Managing Partner</p>
+                <p class="ceo-description">As the Managing Partner of Maanasa Constructions, Nagendra Rao Kalavakuri
+                    leads with a commitment to excellence and a passion for craftsmanship. With over a decade of
+                    industry experience, he ensures that every project reflects our core values of quality, integrity,
+                    and client satisfaction.</p>
             </div>
         </div>
     </div>

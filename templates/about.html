@@ -5,49 +5,91 @@
 {% block content %}
 <div class="about-us-hero" data-aos="fade-in" data-aos-duration="1500">
     <div class="hero-overlay">
-        <h1>Building Legacies, One Project at a Time.</h1>
-        <p>Our commitment to excellence shapes every foundation we lay.</p>
+        <h1 class="about-hero-quote">&ldquo;Crafting Spaces, Building Relationships&rdquo;</h1>
+        <p>Building legacies, one project at a time — our commitment to excellence shapes every foundation we lay.
+        </p>
     </div>
 </div>
 
 <section class="about-section container" data-aos="fade-up" data-aos-delay="200">
-    <h2>Our Story: Crafting Visions into Reality</h2>
-    <p>At Maanasa Constructions, our journey began with a simple yet profound vision: to redefine the standards of construction through unwavering quality, innovative solutions, and absolute client satisfaction. Founded by Kalavakuri Nagendra Rao, we set out to build not just structures, but lasting relationships and communities. From humble beginnings, we have grown into a trusted name, known for our integrity and the precision with which we bring every blueprint to life.</p>
+    <h2>Our Story</h2>
+    <p>Founded in 2012, Maanasa Constructions is owned and operated by Kalavakuri Nagendra Rao, who believes great
+        construction starts with treating every project like it's personal. Over more than a decade, that hands-on
+        approach has built a reputation across custom builds, residential, and commercial projects throughout
+        Malkajgiri and the surrounding neighborhoods.</p>
+    <p>When you work with us, you're working directly with the person whose name is on the door — hands-on, from the
+        first conversation to the final walkthrough.</p>
+    <p>Dhana Lakshmi Kalavakuri serves alongside him as Managing Partner, helping guide the business day to day.</p>
 </section>
 
-<section class="mission-vision-values container">
-    <div class="m-v-item" data-aos="fade-right" data-aos-delay="400">
-        <h3>Our Mission</h3>
-        <p>To deliver exceptional construction services that consistently exceed client expectations, ensuring every project is completed with unparalleled quality, safety, and efficiency.</p>
-    </div>
-    <div class="m-v-item" data-aos="fade-up" data-aos-delay="600">
-        <h3>Our Vision</h3>
-        <p>To be the leading construction partner, recognized for our innovative approach, sustainable practices, and profound impact on the landscapes and lives we touch.</p>
-    </div>
-    <div class="m-v-item" data-aos="fade-left" data-aos-delay="800">
-        <h3>Our Values</h3>
-        <ul>
-            <li data-aos="fade-left" data-aos-delay="900"><strong>Integrity:</strong> Upholding the highest ethical standards in all our endeavors.</li>
-            <li data-aos="fade-left" data-aos-delay="1000"><strong>Quality:</strong> Committing to superior craftsmanship and durable solutions.</li>
-            <li data-aos="fade-left" data-aos-delay="1100"><strong>Collaboration:</strong> Fostering strong partnerships with clients, employees, and communities.</li>
-            <li data-aos="fade-left" data-aos-delay="1200"><strong>Innovation:</strong> Embracing new technologies and methods for better outcomes.</li>
-            <li data-aos="fade-left" data-aos-delay="1300"><strong>Sustainability:</strong> Building responsibly for a better future.</li>
-        </ul>
+<section class="about-stats container" data-aos="fade-up" data-aos-delay="300">
+    <p class="stats-intro">That same hands-on approach has carried us through more than fifty projects since we laid
+        our first foundation in 2012 — and counting.</p>
+    <div class="stat-highlight">
+        <span class="stat-number">50+</span>
+        <span class="stat-label">Projects Completed</span>
     </div>
 </section>
 
-<section class="leadership-section container" data-aos="fade-up" data-aos-delay="1400">
-    <h2>Meet Our Leadership</h2>
-    <div class="leader-card">
-        <h3>Kalavakuri Nagendra Rao</h3>
-        <p class="leader-title">Managing Partner</p>
-        <p>With a decade of hands-on experience and a relentless drive for perfection, Nagendra Rao founded Maanasa Constructions on the principles of trust and craftsmanship. He personally oversees strategic direction, ensuring that our commitment to quality permeates every aspect of our operations and client relationships.</p>
+<section class="values-section container" data-aos="fade-up" data-aos-delay="400">
+    <h2>Our Values</h2>
+    <p class="values-intro">What sets us apart:</p>
+    <ul class="values-list">
+        <li><strong>Personal attention</strong> — every project is overseen directly by Nagendra Rao, from planning
+            to final walkthrough</li>
+        <li><strong>Honest communication</strong> — no surprises, no jargon, just straight answers</li>
+        <li><strong>Quality craftsmanship</strong> — built to last, not just to look good on day one</li>
+        <li><strong>Flexible expertise</strong> — from custom homes to commercial builds, we bring the same standard
+            to every job</li>
+    </ul>
+</section>
+
+<section class="testimonials-section container" data-aos="fade-up" data-aos-delay="500">
+    <h2>What Our Clients Say</h2>
+    <div class="testimonials-grid">
+        {% set testimonials = [
+        ("My association with Mr Nagender Rao dates back to the days we were immediate neighbours. With that trust and confidence in mind, during the year 2016, I had purchased a 2 BHK apartment in Maanasa Sadan, probably his first construction venture. At no time till date, I have an iota of regret for that possession. The quality of construction, maintaining timelines, and above all his accessibility and availability to all customers is impeccable and unmatched. I feel happy to say that my son is also a customer of Maanasa Constructions, having purchased one 3 BHK apartment in Maanasa Gardens. I am sure, he would not have dared and ventured had we and he not satisfied at any point with Maanasa Constructions. We had suggested and referred some customers, when they were in search of good quality construction and timely completion projects. God support us, should we need and afford any future apartment purchases, Maanasa Constructions shall be undoubtedly our first choice.",
+        "Kameswara Rao", "Homeowner, Maanasa Sadan"),
+        ("I purchased both a 2 BHK and a 3 BHK flat from Maanasa Constructions, and overall, I am very happy with my experience. The construction quality is good, and they have used quality materials and hardware. The builder and their staff are very supportive and approachable, even after the purchase. The documentation process was also smooth and hassle-free, and the pricing was reasonable. I particularly appreciated that they were open to discussing modifications during the construction stage, subject to their policies, and supported us wherever possible. Overall, it has been a very good and satisfying experience purchasing my flats from Maanasa Constructions. I am happy with my decision and would definitely recommend them to others looking for a reliable builder.",
+        "Eggina Balaji", "2 BHK & 3 BHK Owner"),
+        ("We purchased a flat from Nagendra Garu, and our experience has been excellent. The quality of construction is very good, and the flat was handed over well within the promised timeline, which we greatly appreciated. Throughout the process, Nagendra Garu was extremely responsive and approachable. He patiently listened to all our requirements and accommodated the modifications we requested. His team was also very responsive, providing timely updates and addressing our queries promptly. What stood out most was his commitment to customer satisfaction and his willingness to work with us to ensure the flat met our expectations. We are very happy with our purchase and would highly recommend Nagendra Garu to anyone looking for a reliable builder who delivers quality work on time.",
+        "Rahul", "Client of Maanasa Constructions"),
+        ] %}
+        {% for quote, author, subtitle in testimonials %}
+        <div class="testimonial-card">
+            <i class="fa-solid fa-quote-left testimonial-quote-icon" aria-hidden="true"></i>
+            <p class="testimonial-text">{{ quote }}</p>
+            <button type="button" class="testimonial-toggle">Read more</button>
+            <div class="testimonial-footer">
+                <p class="testimonial-author">{{ author }}</p>
+                <p class="testimonial-subtitle">{{ subtitle }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </section>
 
-<section class="quality-commitment container" data-aos="fade-in" data-aos-delay="1600">
-    <h2>Our Commitment to Quality</h2>
-    <p>At Maanasa Constructions, quality is not just a goal—it's the foundation of everything we do. We meticulously plan, execute, and monitor every phase of construction, adhering to the highest industry standards. From the selection of premium materials to the expertise of our skilled workforce, we ensure that every detail contributes to a structure that is safe, sustainable, and built to stand the test of time. Our rigorous quality control processes guarantee exceptional results and deliver peace of mind to our clients.</p>
+<section class="about-cta-section container" data-aos="fade-up" data-aos-delay="600">
+    <h2>Ready to Start Your Project?</h2>
+    <p>Get a free quote, or get in touch with us directly.</p>
+    <a href="{{ url_for('contact') }}" class="hero-cta about-cta-button">Get a Free Quote</a>
+    <div class="about-cta-links">
+        <a href="mailto:maanasa.enquiries@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            maanasa.enquiries@gmail.com</a>
+        <a href="tel:+918978746226"><i class="fa-solid fa-phone" aria-hidden="true"></i> +91 89787 46226</a>
+        <a href="tel:+918374246226"><i class="fa-solid fa-phone" aria-hidden="true"></i> +91 83742 46226</a>
+        <a href="https://wa.me/918374246226" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"
+                aria-hidden="true"></i> WhatsApp: +91 83742 46226</a>
+    </div>
 </section>
 
+<script>
+    document.querySelectorAll('.testimonial-toggle').forEach(function (btn) {
+        const card = btn.closest('.testimonial-card');
+        btn.addEventListener('click', function () {
+            const expanded = card.classList.toggle('expanded');
+            btn.textContent = expanded ? 'Show less' : 'Read more';
+        });
+    });
+</script>
 {% endblock %}

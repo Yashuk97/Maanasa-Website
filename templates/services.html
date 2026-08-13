@@ -1,20 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %}Services{% endblock %}
+{% block title %}Services & Projects{% endblock %}
 
 {% block content %}
-<div class="projects-landing">
-    <h1>Our Projects</h1>
-    <p>Explore our Ongoing and Past Projects below.</p>
-    <div class="projects-container">
-        <a href="{{ url_for('projects_list', status_filter='Ongoing') }}" class="project-category ongoing-projects-card">
-            <h2>Ongoing Projects</h2>
-            <p>See our projects currently under construction.</p>
-        </a>
-        <a href="{{ url_for('projects_list', status_filter='Past') }}" class="project-category past-projects-card">
-            <h2>Past Projects</h2>
-            <p>Browse our gallery of completed work</p>
-        </a>
+<section class="projects-hero container">
+    <p class="projects-eyebrow">Malkajgiri &middot; Secunderabad</p>
+    <h1 class="projects-heading">Sites with<br><span class="projects-heading-accent">a story.</span></h1>
+    <p class="projects-hero-desc">A look at the homes and commercial spaces we've built, and are building, across
+        Malkajgiri and the surrounding neighborhoods.</p>
+</section>
+
+<section class="projects-list-section container">
+    <h2 class="projects-section-title">Current Projects</h2>
+    {% if ongoing_projects %}
+    <div class="projects-rows">
+        {% for project in ongoing_projects %}
+        <div class="project-row">
+            <span class="project-row-number">{{ "%02d"|format(loop.index) }}</span>
+            <div class="project-row-main">
+                <h3>{{ project.name }}</h3>
+                <p class="project-row-location">{{ project.location }}</p>
+            </div>
+            <span class="project-row-status project-row-status-ongoing">In Progress</span>
+            <a href="{{ url_for('project_detail', project_id=project.id) }}" class="project-row-link">View Details
+                <span aria-hidden="true">&#8599;</span></a>
+        </div>
+        {% endfor %}
     </div>
-</div>
+    {% else %}
+    <p class="projects-empty">No current projects to show right now — check back soon.</p>
+    {% endif %}
+</section>
+
+<section class="projects-list-section container">
+    <h2 class="projects-section-title">Past Projects</h2>
+    {% if past_projects %}
+    <div class="projects-rows">
+        {% for project in past_projects %}
+        <div class="project-row">
+            <span class="project-row-number">{{ "%02d"|format(loop.index) }}</span>
+            <div class="project-row-main">
+                <h3>{{ project.name }}</h3>
+                <p class="project-row-location">{{ project.location }}</p>
+            </div>
+            <span class="project-row-status project-row-status-past">Completed</span>
+            <a href="{{ url_for('project_detail', project_id=project.id) }}" class="project-row-link">View Details
+                <span aria-hidden="true">&#8599;</span></a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="projects-empty">Past projects will be listed here soon.</p>
+    {% endif %}
+</section>
 {% endblock %}

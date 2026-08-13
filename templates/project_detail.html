@@ -3,17 +3,178 @@
 {% block title %}{{ project.name }}{% endblock %}
 
 {% block content %}
-    <div class="project-details">
-        <h1>{{ project.name }}</h1>
-        <p><strong>Location:</strong> {{ project.location }}</p>
-        <div class="project-detail-image">
-            {% if project.main_photo_url %}
-                <img src="{{ url_for('static', filename='uploads/' + project.main_photo_url) }}" alt="{{ project.name }}">
+<div class="project-detail-page container">
+    <a href="{{ url_for('services') }}" class="back-link">&larr; Back to Projects</a>
+
+    <div class="project-detail-title" data-aos="fade-up">
+        <span
+            class="project-row-status {{ 'project-row-status-ongoing' if project.status == 'Ongoing' else 'project-row-status-past' }}">
+            {{ 'In Progress' if project.status == 'Ongoing' else 'Completed' }}
+        </span>
+        <h1 class="project-detail-name">{{ project.name }}</h1>
+        <a class="project-detail-address"
+            href="https://www.google.com/maps/search/?api=1&query={{ project.location | replace(' ', '+') }}"
+            target="_blank" rel="noopener">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i> {{ project.location }}
+        </a>
+    </div>
+
+    {% set photos = [] %}
+    {% if project.main_photo_url %}{% set _ = photos.append(project.main_photo_url) %}{% endif %}
+    {% if project.gallery_photo_url %}{% set _ = photos.append(project.gallery_photo_url) %}{% endif %}
+    {% if project.gallery_photo_url_2 %}{% set _ = photos.append(project.gallery_photo_url_2) %}{% endif %}
+
+    {% if photos %}
+    <div class="project-photos-grid">
+        {% for photo in photos %}
+        <div class="project-photo-item expandable-photo" data-aos="zoom-in" data-aos-delay="{{ loop.index0 * 100 }}"
+            data-full="{{ url_for('static', filename='uploads/' + photo) }}">
+            <img src="{{ url_for('static', filename='uploads/' + photo) }}" alt="{{ project.name }} photo">
+            <span class="project-photo-expand-hint"><i class="fa-solid fa-expand" aria-hidden="true"></i>
+                Tap to view full size</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if project.flats_count or project.floors_count or project.duration or project.completion_percentage is not none %}
+    <div class="project-spec-grid" data-aos="fade-up">
+        {% if project.flats_count %}
+        <div class="project-spec-item">
+            <span class="project-spec-number">{{ project.flats_count }}</span>
+            <span class="project-spec-label">Flats</span>
+        </div>
+        {% endif %}
+        {% if project.floors_count %}
+        <div class="project-spec-item">
+            <span class="project-spec-number">{{ project.floors_count }}</span>
+            <span class="project-spec-label">Floors</span>
+        </div>
+        {% endif %}
+        {% if project.duration %}
+        <div class="project-spec-item">
+            <span class="project-spec-number">{{ project.duration }}</span>
+            <span class="project-spec-label">Project Duration</span>
+        </div>
+        {% endif %}
+        {% if project.completion_percentage is not none %}
+        <div class="project-spec-item project-spec-progress">
+            <span class="project-spec-number">{{ project.completion_percentage }}%</span>
+            <span class="project-spec-label">Complete</span>
+            <div class="project-progress-bar">
+                <div class="project-progress-bar-fill" style="width: {{ project.completion_percentage }}%;"></div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if project.facing or project.project_type or project.area_sqft %}
+    <div class="project-highlights-section">
+        <h2 class="project-highlights-heading" data-aos="fade-up">Project Highlights</h2>
+        <div class="project-highlights-grid">
+            {% if project.project_type %}
+            <div class="project-highlight-card" data-aos="fade-up" data-aos-delay="0">
+                <i class="fa-solid fa-building" aria-hidden="true"></i>
+                <span class="project-highlight-value">{{ project.project_type }}</span>
+                <span class="project-highlight-label">Type</span>
+            </div>
+            {% endif %}
+            {% if project.facing %}
+            <div class="project-highlight-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-compass" aria-hidden="true"></i>
+                <span class="project-highlight-value">{{ project.facing }}</span>
+                <span class="project-highlight-label">Facing</span>
+            </div>
+            {% endif %}
+            {% if project.area_sqft %}
+            <div class="project-highlight-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i>
+                <span class="project-highlight-value">{{ project.area_sqft }} sq.ft</span>
+                <span class="project-highlight-label">Area</span>
+            </div>
             {% endif %}
         </div>
-        <div class="project-detail-description">
-            <p>{{ project.description }}</p>
-        </div>
-        <a href="{{ url_for('projects_list', status_filter='Past') }}" class="back-link">← Back to Projects</a>
     </div>
+    {% endif %}
+
+    <div class="key-highlights-section">
+        <h2 class="project-highlights-heading" data-aos="fade-up">Key Highlights</h2>
+        <p class="key-highlights-subtext" data-aos="fade-up">Built with materials and fittings we trust:</p>
+        <div class="key-highlights-grid">
+            <div class="key-highlight-badge" data-aos="fade-up" data-aos-delay="0">
+                <i class="fa-solid fa-industry" aria-hidden="true"></i>
+                <span>Radha TMT</span>
+            </div>
+            <div class="key-highlight-badge" data-aos="fade-up" data-aos-delay="60">
+                <i class="fa-solid fa-trowel-bricks" aria-hidden="true"></i>
+                <span>UltraTech Cement</span>
+            </div>
+            <div class="key-highlight-badge" data-aos="fade-up" data-aos-delay="120">
+                <i class="fa-solid fa-cube" aria-hidden="true"></i>
+                <span>Ramco Cement</span>
+            </div>
+            <div class="key-highlight-badge" data-aos="fade-up" data-aos-delay="180">
+                <i class="fa-solid fa-tree" aria-hidden="true"></i>
+                <span>Indian Teakwood</span>
+            </div>
+            <div class="key-highlight-badge" data-aos="fade-up" data-aos-delay="240">
+                <i class="fa-solid fa-paint-roller" aria-hidden="true"></i>
+                <span>Asian Paints</span>
+            </div>
+            <div class="key-highlight-badge" data-aos="fade-up" data-aos-delay="300">
+                <i class="fa-solid fa-shower" aria-hidden="true"></i>
+                <span>CERA &amp; Jaguar Bathroom Fittings</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-detail-description" data-aos="fade-up">
+        <p>{{ project.description }}</p>
+    </div>
+
+    <div class="project-detail-cta" data-aos="zoom-in">
+        <h2>Want to know more about this project?</h2>
+        <p>Get in touch with us and we'll walk you through everything.</p>
+        <a href="https://wa.me/918374246226" target="_blank" rel="noopener" class="whatsapp-direct-btn">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Chat on WhatsApp
+        </a>
+        <a href="mailto:maanasa.enquiries@gmail.com" class="hero-cta">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i> Email Us
+        </a>
+    </div>
+</div>
+
+<div class="photo-lightbox" id="photoLightbox">
+    <button type="button" class="photo-lightbox-close" id="photoLightboxClose" aria-label="Close">&times;</button>
+    <img src="" alt="Full size project photo" id="photoLightboxImg">
+</div>
+
+<script>
+    (function () {
+        const lightbox = document.getElementById('photoLightbox');
+        const lightboxImg = document.getElementById('photoLightboxImg');
+        const closeBtn = document.getElementById('photoLightboxClose');
+
+        document.querySelectorAll('.expandable-photo').forEach(function (el) {
+            el.addEventListener('click', function () {
+                lightboxImg.src = el.getAttribute('data-full');
+                lightbox.classList.add('open');
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            lightboxImg.src = '';
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    })();
+</script>
 {% endblock %}
