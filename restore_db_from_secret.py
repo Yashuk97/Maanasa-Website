@@ -17,24 +17,28 @@ SECRET_PATH = "/etc/secrets/site_db.b64"
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "instance", "site.db")
 
 
-def db_already_has_tables(path):
+def db_already_has_data(path):
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         return False
     try:
         conn = sqlite3.connect(path)
         cur = conn.cursor()
-        cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
-        tables = cur.fetchall()
+        cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='project'")
+        if not cur.fetchone():
+            conn.close()
+            return False
+        cur.execute("SELECT COUNT(*) FROM project")
+        count = cur.fetchone()[0]
         conn.close()
-        return len(tables) > 0
+        return count > 0
     except Exception:
         return False
 
 
 if not os.path.exists(SECRET_PATH):
     print("restore_db_from_secret: no secret file found, skipping.")
-elif db_already_has_tables(DB_PATH):
-    print("restore_db_from_secret: database already has tables, skipping restore.")
+elif db_already_has_data(DB_PATH):
+    print("restore_db_from_secret: database already has project data, skipping restore.")
 else:
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     with open(SECRET_PATH, "r") as f:
