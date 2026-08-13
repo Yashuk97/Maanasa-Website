@@ -161,6 +161,13 @@ admin = Admin(app, name='Maanasa Admin',
 admin.add_view(MyProjectView(Project, db.session, name='Projects'))
 admin.add_view(ModelView(About, db.session, name='About Us'))
 
+# Creates any missing tables on startup. Safe to run every time — it never
+# touches tables that already exist, so this won't wipe real data; it just
+# makes sure a brand-new empty disk (like on a fresh deploy) isn't missing
+# tables entirely.
+with app.app_context():
+    db.create_all()
+
 
 @app.route("/")
 def home():
